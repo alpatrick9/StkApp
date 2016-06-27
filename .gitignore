@@ -1,9 +1,9 @@
-/web/bundles/
+#/web/bundles/
 
-/app/cache/*
+#/app/cache/*
 
-app/logs/*
+#app/logs/*
 
-.idea/*
+#.idea/*
 
-.idea/workspace.xml
+#.idea/workspace.xml
