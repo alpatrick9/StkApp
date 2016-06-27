@@ -1,0 +1,4 @@
+services:
+#    stk_archive.example:
+#        class: Stk\ArchiveBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

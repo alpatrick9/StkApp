@@ -1,3 +1,7 @@
+stk_archive:
+    resource: "@StkArchiveBundle/Controller/"
+    type: annotation
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
