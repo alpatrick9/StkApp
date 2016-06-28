@@ -1,0 +1,10 @@
+{% extends 'StkForumBundle::layout.html.twig' %}
+{% block forum_body %}
+    <form method="post">
+        {{ form_widget(form) }}
+        <div class="align-right">
+            <input type="submit" value="Enregistrer" class="custom_margin">
+            <a href="{{ path('forum_home') }}" class="button custom_margin" >Annuler</a>
+        </div>
+    </form>
+{% endblock %}

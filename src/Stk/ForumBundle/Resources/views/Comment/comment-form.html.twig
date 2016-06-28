@@ -1,0 +1,11 @@
+{% extends 'StkForumBundle::layout.html.twig' %}
+{% block forum_body %}
+    <h5>Commentaire pour {{ subject.title }}</h5>
+    <form method="post">
+        {{ form_widget(form) }}
+        <div class="align-right">
+            <input type="submit" value="Enregistrer" class="custom_margin">
+            <a href="{{ path('show_comment', {'id': subject.id}) }}" class="button custom_margin" >Annuler</a>
+        </div>
+    </form>
+{% endblock %}

@@ -5,12 +5,12 @@ namespace Stk\ForumBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Comment
+ * Subject
  *
- * @ORM\Table(name="comment")
- * @ORM\Entity(repositoryClass="Stk\ForumBundle\Repository\CommentRepository")
+ * @ORM\Table(name="subject")
+ * @ORM\Entity(repositoryClass="Stk\ForumBundle\Repository\SubjectRepository")
  */
-class Comment
+class Subject
 {
     /**
      * @var int
@@ -24,9 +24,9 @@ class Comment
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text")
+     * @ORM\Column(name="title", type="string", length=255, unique=true)
      */
-    private $comment;
+    private $title;
 
     /**
      * @var \DateTime
@@ -36,15 +36,14 @@ class Comment
     private $createdOn;
 
     /**
-     * @var Subject
-     * 
-     * @ORM\ManyToOne(targetEntity="Stk\ForumBundle\Entity\Subject", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
+     * @var Comment[]
+     *
+     * @ORM\OneToMany(targetEntity="Stk\ForumBundle\Entity\Comment", mappedBy="subject", cascade={"remove"})
      */
-    private $subject;
+    private $comments;
 
     /**
-     * Comment constructor.
+     * Subject constructor.
      * @param \DateTime $createdOn
      */
     public function __construct()
@@ -64,27 +63,27 @@ class Comment
     }
 
     /**
-     * Set comment
+     * Set title
      *
-     * @param string $comment
+     * @param string $title
      *
-     * @return Comment
+     * @return Subject
      */
-    public function setComment($comment)
+    public function setTitle($title)
     {
-        $this->comment = $comment;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get comment
+     * Get title
      *
      * @return string
      */
-    public function getComment()
+    public function getTitle()
     {
-        return $this->comment;
+        return $this->title;
     }
 
     /**
@@ -92,7 +91,7 @@ class Comment
      *
      * @param \DateTime $createdOn
      *
-     * @return Comment
+     * @return Subject
      */
     public function setCreatedOn($createdOn)
     {
@@ -110,28 +109,5 @@ class Comment
     {
         return $this->createdOn;
     }
-
-    /**
-     * Set subject
-     *
-     * @param \Stk\ForumBundle\Entity\Subject $subject
-     *
-     * @return Comment
-     */
-    public function setSubject(\Stk\ForumBundle\Entity\Subject $subject)
-    {
-        $this->subject = $subject;
-
-        return $this;
-    }
-
-    /**
-     * Get subject
-     *
-     * @return \Stk\ForumBundle\Entity\Subject
-     */
-    public function getSubject()
-    {
-        return $this->subject;
-    }
 }
+

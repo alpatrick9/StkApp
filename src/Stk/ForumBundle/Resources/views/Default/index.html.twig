@@ -1,4 +1,46 @@
 {% extends "StkForumBundle::layout.html.twig" %}
 {% block forum_body %}
-    Forum
+        {% for subject in subjects %}
+            <section>
+                <a href="{{ path('remove_subject', {'id': subject.id}) }}" class=" close custom_margin"> &times;</a>
+                <h2><a href="{{ path('edit_subject', {'id': subject.id}) }}" class="custom_margin"> &#x270D;</a> <a href="{{ path('show_comment', {'id': subject.id}) }}">{{ subject.title }}</a></h2>
+                <p>
+                    créer le {{ subject.createdOn | date('d-M-Y') }} à {{ subject.createdOn | date('H:i') }}
+                </p>
+
+            </section>
+        {% else %}
+            <p> Aucun sujet enregistré</p>
+        {% endfor %}
+    {% if subjects|length > 0 %}
+        <div class="pagination align-center">
+            <ul>
+                {% for p in range(1, nbPage) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('forum_home', {'page': p}) }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <script>
+        function checkNotification() {
+            $.ajax({
+                url: "{{ path('subject_notification_check') }}",
+                method: "post",
+                data: {size: {{ subjects|length}} },
+                success: function (msg) {
+                    if(JSON.parse(msg).status) {
+                        document.location.href="{{ path('forum_home') }}";
+                    }
+                },
+                error: function (msg) {
+                    console.log('Error request Ajax');
+                }
+            })
+            setTimeout(checkNotification,5000);
+        }
+        checkNotification();
+    </script>
 {% endblock  %}

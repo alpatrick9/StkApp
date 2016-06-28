@@ -35,6 +35,22 @@ class Subject
      */
     private $createdOn;
 
+    /**
+     * @var Comment[]
+     *
+     * @ORM\OneToMany(targetEntity="Stk\ForumBundle\Entity\Comment", mappedBy="subject", cascade={"remove"})
+     */
+    private $comments;
+
+    /**
+     * Subject constructor.
+     * @param \DateTime $createdOn
+     */
+    public function __construct()
+    {
+        $this->createdOn = new \DateTime();
+    }
+
 
     /**
      * Get id
@@ -93,5 +109,38 @@ class Subject
     {
         return $this->createdOn;
     }
-}
 
+    /**
+     * Add comment
+     *
+     * @param \Stk\ForumBundle\Entity\Comment $comment
+     *
+     * @return Subject
+     */
+    public function addComment(\Stk\ForumBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \Stk\ForumBundle\Entity\Comment $comment
+     */
+    public function removeComment(\Stk\ForumBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+}

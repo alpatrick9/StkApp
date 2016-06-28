@@ -38,10 +38,19 @@ class Comment
     /**
      * @var Subject
      * 
-     * @ORM\ManyToOne(targetEntity="Stk\ForumBundle\Entity\Subject")
+     * @ORM\ManyToOne(targetEntity="Stk\ForumBundle\Entity\Subject", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $subject;
+
+    /**
+     * Comment constructor.
+     * @param \DateTime $createdOn
+     */
+    public function __construct()
+    {
+        $this->createdOn = new \DateTime();
+    }
 
 
     /**
@@ -101,5 +110,28 @@ class Comment
     {
         return $this->createdOn;
     }
-}
 
+    /**
+     * Set subject
+     *
+     * @param \Stk\ForumBundle\Entity\Subject $subject
+     *
+     * @return Comment
+     */
+    public function setSubject(\Stk\ForumBundle\Entity\Subject $subject)
+    {
+        $this->subject = $subject;
+
+        return $this;
+    }
+
+    /**
+     * Get subject
+     *
+     * @return \Stk\ForumBundle\Entity\Subject
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+}

@@ -1,6 +1,7 @@
 <?php
 
 namespace Stk\ForumBundle\Repository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * SubjectRepository
@@ -10,4 +11,21 @@ namespace Stk\ForumBundle\Repository;
  */
 class SubjectRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getSubjects($nbParPage, $page) {
+        if($page < 1) {
+            throw new \InvalidArgumentException('L\'argument $page ne peut être inférieur à 1 (valeur: "'.$page.'").');
+        }
+
+        $query = $this->createQueryBuilder('subject')
+            ->orderBy('subject.createdOn', 'DESC')
+            ->getQuery();
+
+        $query->setFirstResult(($page-1) * $nbParPage)->setMaxResults($nbParPage);
+        return new Paginator($query);
+    }
+
+    public function count() {
+        $query = $this->createQueryBuilder('subject')->select('COUNT(subject)')->getQuery();
+        return $query->getSingleScalarResult();
+    }
 }

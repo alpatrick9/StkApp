@@ -1,6 +1,8 @@
 <?php
 
 namespace Stk\ForumBundle\Repository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Stk\ForumBundle\Entity\Subject;
 
 /**
  * CommentRepository
@@ -10,4 +12,25 @@ namespace Stk\ForumBundle\Repository;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getComments($nbParPage, $page, Subject $subject) {
+        if($page < 1) {
+            throw new \InvalidArgumentException('L\'argument $page ne peut être inférieur à 1 (valeur: "'.$page.'").');
+        }
+
+        $query = $this->createQueryBuilder('comment')
+            ->where('comment.subject= :subject')->setParameter('subject', $subject)
+            ->orderBy('comment.createdOn', 'DESC')
+            ->getQuery();
+
+        $query->setFirstResult(($page-1) * $nbParPage)->setMaxResults($nbParPage);
+        return new Paginator($query);
+    }
+
+    public function count(Subject $subject) {
+        $query = $this->createQueryBuilder('comment')
+            ->select('COUNT(comment)')
+            ->where('comment.subject= :subject')->setParameter('subject',$subject)
+            ->getQuery();
+        return $query->getSingleScalarResult();
+    }
 }
