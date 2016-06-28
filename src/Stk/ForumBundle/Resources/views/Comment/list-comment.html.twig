@@ -5,10 +5,17 @@
         <a href="{{ path('add_comment', {'id': subject.id}) }}" class="button">Ajouter des commentaires</a>
     </section>
     {% for comment in comments %}
-        <fieldset class="custom_fieldset">
-            <legend>créer le {{ comment.createdOn | date('d-M-Y') }} à {{ comment.createdOn | date('H:i') }}</legend>
-            <p>{{ comment.comment }}</p>
-        </fieldset>
+        <div>
+            <a href="{{ path('remove_comment', {'id': comment.id}) }}" class=" close custom_margin" onclick="return confirm('Voulez vous supprimer ce commentaire ?')"> &times;</a>
+            <fieldset class="custom_fieldset">
+                <legend>
+                    créer le {{ comment.createdOn | date('d-M-Y') }} à {{ comment.createdOn | date('H:i') }}
+                    <a href="{{ path('edit_comment', {'id': comment.id}) }}" class="custom_margin"> &#x270D;</a>
+                </legend>
+
+                <p>{{ comment.comment }}</p>
+            </fieldset>
+        </div>
     {% else %}
         <p> Aucun commentaire enregistré</p>
     {% endfor %}

@@ -80,10 +80,42 @@ class CommentController extends Controller
 
     /**
      * @param Request $request
+     * @param Comment $comment
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @Route("/edit/{id}", name="edit_comment")
+     */
+    public function editCommentAction(Request $request, Comment $comment) {
+        $form = $this->createForm(CommentType::class, $comment);
+        if($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirect($this->generateUrl('show_comment',['id'=>$comment->getSubject()->getId()]));
+        }
+        return $this->render('StkForumBundle:Comment:comment-form.html.twig',[
+            'form'=>$form->createView(),
+            'subject'=>$comment->getSubject()
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param Comment $comment
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/remove/{id}", name="remove_comment")
+     */
+    public function removeCommentAction(Request $request, Comment $comment) {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($comment);
+        $em->flush();
+        return $this->redirect($this->generateUrl('show_comment',['id'=>$comment->getSubject()->getId()]));
+    }
+
+    /**
+     * @param Request $request
      * @return JsonResponse|Response
      * @Route("/notification-check", name="comment_notification_check")
      */
-    public function checkComment(Request $request) {
+    public function checkCommentAction(Request $request) {
         if($request->isXmlHttpRequest()) {
             $status = new NotificationCheck();
 

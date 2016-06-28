@@ -2,7 +2,7 @@
 {% block forum_body %}
         {% for subject in subjects %}
             <section>
-                <a href="{{ path('remove_subject', {'id': subject.id}) }}" class=" close custom_margin"> &times;</a>
+                <a href="{{ path('remove_subject', {'id': subject.id}) }}" class=" close custom_margin" onclick="return confirm('Voulez vous supprimer le sujet {{ subject.title }} ?')"> &times;</a>
                 <h2><a href="{{ path('edit_subject', {'id': subject.id}) }}" class="custom_margin"> &#x270D;</a> <a href="{{ path('show_comment', {'id': subject.id}) }}">{{ subject.title }}</a></h2>
                 <p>
                     créer le {{ subject.createdOn | date('d-M-Y') }} à {{ subject.createdOn | date('H:i') }}
