@@ -1,3 +1,7 @@
+stk_forum:
+    resource: "@StkForumBundle/Controller/"
+    type:   annotation
+
 stk_archive:
     resource: "@StkArchiveBundle/Controller/"
     type: annotation

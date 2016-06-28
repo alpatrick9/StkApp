@@ -10,6 +10,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     <!--[if lte IE 8]><script src="{{ asset('js/ie/html5shiv.js') }}"></script><![endif]-->
     <!--[if lte IE 8]><link rel="stylesheet" href="{{ asset('css/ie8.css') }}" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="{{ asset('css/ie9.css') }}" /><![endif]-->
@@ -21,12 +22,15 @@
 
     <!-- Header -->
     <div id="header">
+        <div class="align-right">
+            <a href="#">Connection</a>
+        </div>
         <!-- Nav -->
         <nav id="nav">
             <ul>
                 <li id="homeNav"><a href="{{ path('homepage') }}">Home</a></li>
                 <li id="archiveNav"><a href="{{ path('archive_home') }}">Archive</a></li>
-                <li id="forumNav"><a href="#">Forum</a></li>
+                <li id="forumNav"><a href="{{ path('forum_home') }}">Forum</a></li>
                 <li id="adminNav"><a href="#">Administration</a></li>
             </ul>
         </nav>
