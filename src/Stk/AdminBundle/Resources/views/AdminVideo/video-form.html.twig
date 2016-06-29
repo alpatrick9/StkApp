@@ -1,0 +1,11 @@
+{% extends 'StkAdminBundle::layout.html.twig' %}
+{% block admin_body %}
+    <h5>Enregistrement/Modification vidéo</h5>
+    <form method="post">
+        {{ form_widget(form) }}
+        <div class="align-right">
+            <input type="submit" value="Ajouter" class="custom_margin">
+            <a href="{{ path('admin_list_videos') }}" class="button custom_margin" >Annuler</a>
+        </div>
+    </form>
+{% endblock %}

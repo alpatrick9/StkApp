@@ -1,0 +1,31 @@
+{% extends "::base.html.twig"%}
+{% block body %}
+    <!-- Main -->
+
+    <div class="container">
+        <div class="row">
+            <div class="4u 12u(narrower)">
+                <div id="sidebar">
+
+                    <!-- Sidebar -->
+                    <ul>
+                        <li><a href="{{ path('admin_list_videos') }}">gestion videos</a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="8u  12u(narrower) important(narrower)">
+                <div id="content">
+                    {% block admin_body %} {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var nav = document.getElementById("adminNav");
+        nav.className +="current";
+    </script>
+{% endblock %}

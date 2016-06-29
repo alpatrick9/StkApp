@@ -1,0 +1,4 @@
+services:
+#    stk_admin.example:
+#        class: Stk\AdminBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

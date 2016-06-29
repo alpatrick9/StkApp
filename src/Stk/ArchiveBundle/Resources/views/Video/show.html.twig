@@ -1,0 +1,8 @@
+{% extends 'StkArchiveBundle::layout.html.twig' %}
+{% block archive_body %}
+    <h3>{{ video.title }}</h3>
+    <p>Date de post: {{ video.postedOn | date}}</p>
+    <div class="video-container">
+        {{ video.iframe | raw }}
+    </div>
+{% endblock %}

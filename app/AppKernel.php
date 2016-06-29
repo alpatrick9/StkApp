@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Stk\ArchiveBundle\StkArchiveBundle(),
             new Stk\ForumBundle\StkForumBundle(),
+            new Stk\AdminBundle\StkAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

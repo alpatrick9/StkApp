@@ -1,0 +1,9 @@
+<ul>
+    {% for menu in menus %}
+        <li>
+            <a href="{{ path('show_video', {'id': menu.id}) }}">{{ menu.title }}</a>
+        </li>
+    {% else %}
+        Aucun video enregistré
+    {% endfor %}
+</ul>

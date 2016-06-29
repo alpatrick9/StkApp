@@ -1,0 +1,43 @@
+{% extends 'StkAdminBundle::layout.html.twig' %}
+{% block admin_body %}
+    <section class="align-right">
+        <a href="{{ path('add_video') }}" class="button">Ajouter des vidéos</a>
+    </section>
+    <table class="table table-hover table-striped avectri">
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Iframe</th>
+            <th>Date de creation</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for video in videos %}
+            <tr>
+                <td>{{ video.title }}</td>
+                <td>{{ video.iframe }}</td>
+                <td>{{ video.postedOn | date}}</td>
+                <td>
+                    <a href="#" class="custom_margin"> &#x270D;</a>
+                    <a href="#" class=" custom_margin" onclick="return confirm('Voulez vous supprimer le vidéo {{ video.title }} ?')"> &times;</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun videos enregistré</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if videos|length > 0 %}
+        <div class="pagination align-center">
+            <ul>
+                {% for p in range(1, nbPage) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('admin_list_videos', {'page': p}) }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
