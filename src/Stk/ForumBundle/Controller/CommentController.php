@@ -101,9 +101,10 @@ class CommentController extends Controller
      * @param Request $request
      * @param Comment $comment
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/remove/{id}", name="remove_comment")
+     * @Route("/remove/", name="remove_comment")
      */
-    public function removeCommentAction(Request $request, Comment $comment) {
+    public function removeCommentAction(Request $request) {
+        $comment = $this->getDoctrine()->getManager()->getRepository('StkForumBundle:Comment') ->find($request->get('id'));
         $em = $this->getDoctrine()->getManager();
         $em->remove($comment);
         $em->flush();

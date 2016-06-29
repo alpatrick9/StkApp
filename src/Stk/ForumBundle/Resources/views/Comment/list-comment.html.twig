@@ -1,12 +1,16 @@
 {% extends "StkForumBundle::layout.html.twig" %}
 {% block forum_body %}
-    <h2>{{ subject.title }}</h2>
+    <h2 xmlns="http://www.w3.org/1999/html">{{ subject.title }}</h2>
     <section class="align-right">
         <a href="{{ path('add_comment', {'id': subject.id}) }}" class="button">Ajouter des commentaires</a>
     </section>
     {% for comment in comments %}
         <div>
-            <a href="{{ path('remove_comment', {'id': comment.id}) }}" class=" close custom_margin" onclick="return confirm('Voulez vous supprimer ce commentaire ?')"> &times;</a>
+            <form method="post" id="form_remove_comment" action="{{ path('remove_comment') }}">
+                <input type="hidden" value="{{ comment.id }}" name="id">
+                <a href="javascript:{}" class=" close custom_margin" onclick="document.getElementById('form_remove_comment').submit(); return false;"> &times;</a>
+            </form>
+            <!--<a href="{{ path('remove_comment', {'id': comment.id}) }}" class=" close custom_margin" onclick="return confirm('Voulez vous supprimer ce commentaire ?')"> &times;</a>-->
             <fieldset class="custom_fieldset">
                 <legend>
                     créer le {{ comment.createdOn | date('d-M-Y') }} à {{ comment.createdOn | date('H:i') }}
