@@ -4,53 +4,12 @@
     <section class="align-right">
         <a href="{{ path('add_comment', {'id': subject.id}) }}" class="button">Ajouter des commentaires</a>
     </section>
-    {% for comment in comments %}
-        <div>
-            <a href="{{ path('remove_comment', {'id': comment.id}) }}" class=" close custom_margin" onclick="return confirm('Voulez vous supprimer ce commentaire ?')"> &times;</a>
-            <fieldset class="custom_fieldset">
-                <legend>
-                    créer le {{ comment.createdOn | date('d-M-Y') }} à {{ comment.createdOn | date('H:i') }}
-                    <a href="{{ path('edit_comment', {'id': comment.id}) }}" class="custom_margin"> &#x270D;</a>
-                </legend>
-
-                <p>{{ comment.comment }}</p>
-            </fieldset>
-        </div>
-    {% else %}
-        <p> Aucun commentaire enregistré</p>
-    {% endfor %}
-    {% if comments|length > 0 %}
-        <div class="pagination align-center">
-            <ul>
-                {% for p in range(1, nbPage) %}
-                    <li{% if p == page %} class="active"{% endif %}>
-                        <a href="{{ path('show_comment', {'id': subject.id, 'page': p}) }}">{{ p }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-
+    <div id="commentdiv">
+        {{ render(controller('StkForumBundle:Comment:commentView',{'subject': subject, 'page': page})) }}
+    </div>
     <script>
-        function checkNotification() {
-            $.ajax({
-                url: "{{ path('comment_notification_check') }}",
-                method: "post",
-                data: {
-                    size: {{ comments|length}},
-                    subjectId: {{ subject.id }}
-                },
-                success: function (msg) {
-                    if(JSON.parse(msg).status) {
-                        document.location.href="{{ path('show_comment', {'id': subject.id}) }}";
-                    }
-                },
-                error: function (msg) {
-                    console.log('Error request Ajax');
-                }
-            })
-            setTimeout(checkNotification,5000);
-        }
-        checkNotification();
+        setInterval(function () {
+            $("#commentdiv").load("{{ path('comment_view', {'subject': subject.id, 'page': page}) }}", function () {});
+        }, 2000);
     </script>
-{% endblock  %}
+{% endblock %}

@@ -35,6 +35,26 @@ class CommentController extends Controller
      * @Route("/show/{id}/{page}", name="show_comment", defaults={"page" = 1})
      */
     public function showCommentAction(Subject $subject,$page) {
+        /**
+         * @var $repository CommentRepository
+         */
+        $repository = $this->getDoctrine()->getManager()
+            ->getRepository('StkForumBundle:Comment');
+
+        return $this->render('StkForumBundle:Comment:list-comment.html.twig', [
+            'subject'=>$subject,
+            'page'=> $page,
+            'nbComments'=>$repository->count($subject)
+        ]);
+    }
+
+    /**
+     * @param Subject $subject
+     * @param $page
+     * @return Response
+     * @Route("/commentview/{subject}/{page}/", name="comment_view")
+     */
+    public  function commentViewAction(Subject $subject, $page) {
         $nbParPage = 30;
         /**
          * @var $repository CommentRepository
@@ -45,15 +65,13 @@ class CommentController extends Controller
          * @var $comments Comment[]
          */
         $comments = $repository->getComments($nbParPage,$page,$subject);
-
-        return $this->render('StkForumBundle:Comment:list-comment.html.twig', [
+        return $this->render('StkForumBundle:Comment:comment-view.html.twig', [
             'subject'=>$subject,
             'comments'=>$comments,
             'page'=> $page,
             'nbPage' => ceil(count($comments)/$nbParPage)
         ]);
     }
-
     /**
      * @param Request $request
      * @param Subject $subject

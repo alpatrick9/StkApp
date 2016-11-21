@@ -33,4 +33,5 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();
         return $query->getSingleScalarResult();
     }
+    
 }
